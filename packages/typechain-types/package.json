@@ -24,11 +24,13 @@
   "main": "dist/index.js",
   "homepage": "https://github.com/727-ventures/typechain-polkadot#readme",
   "dependencies": {
-    "@polkadot/api": "^10.1.4",
-    "@polkadot/api-contract": "^10.1.4",
+    "@polkadot/api": "^10.8.1",
+    "@polkadot/api-contract": "^10.8.1",
     "@types/bn.js": "^5.1.0",
     "@types/node": "^18.0.3",
-    "camelcase": "^6.3.0",
-    "typescript": "^4.9.5"
+    "camelcase": "^6.3.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.1.3"
   }
 }

@@ -1,84 +1,87 @@
 name: CI/CD
 
 on:
-  pull_request:
-    branches: [ master ]
+    pull_request:
+        branches: [ master ]
 
 jobs:
-  examples-builds:
-    runs-on: ubuntu-latest
-    container:
-      image: ghcr.io/brushfam/typechain-polkadot-ci
-      options: --user root
-    steps:
-      - uses: actions/setup-node@v1
-        with:
-          node-version: '16.x'
-      - uses: actions/checkout@v3
-      - name: NPM Install dependencies
-        run: |
-          npm install
-      - name: Build examples
-        run: |
-          chown -R root .
-          chmod -R a+rwx .
-          set +e
-          substrate-contracts-node --tmp --dev & P1=$!;
-          set -e
-          cd examples/psp22
-          npm i
-          npm run generate
-          npm run start
-          cd ../psp34
-          npm i
-          npm run generate
-          npm run start
-          cd ../psp34_enumerable
-          npm i
-          npm run generate
-          npm run start
-          kill $P1
-  eslint:
-    runs-on: ubuntu-latest
-    container:
-      image: ghcr.io/brushfam/typechain-polkadot-ci
-      options: --user root
-    steps:
-      - uses: actions/setup-node@v1
-        with:
-          node-version: '16.x'
-      - uses: actions/checkout@v3
-      - name: NPM Install dependencies
-        run: |
-          npm install
-      - name: Run ESLint
-        run: |
-          chown -R root .
-          chmod -R a+rwx .
-          npm run lint
-  integration-tests:
-    concurrency:
-      group: integration-tests-${{ github.ref }}
-      cancel-in-progress: true
-    runs-on: ubuntu-latest
-    container:
-      image: ghcr.io/brushfam/typechain-polkadot-ci
-      options: --user root
-    steps:
-      - uses: actions/setup-node@v1
-        with:
-          node-version: '16.x'
-      - uses: actions/checkout@v3
-      - name: NPM install dependencies
-        run: |
-          npm install
-      - name: Run Test Jest
-        run: |
-          chown -R root .
-          chmod -R a+rwx .
-          set +e
-          substrate-contracts-node --tmp --dev & P1=$!;
-          set -e
-          npm run test
-          kill $P1
-        timeout-minutes: 3
+    examples-builds:
+        runs-on: ubuntu-latest
+        container:
+            image: ghcr.io/brushfam/typechain-polkadot-ci
+            options: --user root
+        strategy:
+            matrix:
+                node-version: [12.x, 14.x, 16.x]
+        steps:
+            - uses: actions/checkout@v3
+            - name: Setup node
+              uses: actions/setup-node@v1
+              with:
+                  node-version: ${{ matrix.node-version }}
+            - name: Get yarn cache directory path
+              id: yarn-cache-dir-path
+              run: echo "::set-output name=dir::$(yarn cache dir)"
+            - uses: actions/cache@v2
+              id: yarn-cache
+              with:
+                  path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+                  key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+                  restore-keys: |
+                      ${{ runner.os }}-yarn-
+            - name: Yarn Install dependencies
+              run: |
+                  yarn install
+            - name: Run example builds
+              run: |
+                  chown -R root .
+                  chmod -R a+rwx .
+                  bash ./examples.sh
+    eslint:
+        needs: examples-builds
+        runs-on: ubuntu-latest
+        container:
+            image: ghcr.io/brushfam/typechain-polkadot-ci
+            options: --user root
+        steps:
+            - uses: actions/checkout@v3
+            - name: Setup node
+              uses: actions/setup-node@v1
+              with:
+                  node-version: '16.x'
+            - name: Yarn Install dependencies
+              run: |
+                  yarn install
+            - name: Run ESLint
+              run: |
+                  chown -R root .
+                  chmod -R a+rwx .
+                  yarn lint
+    integration-tests:
+        needs: eslint
+        concurrency:
+            group: integration-tests-${{ github.ref }}
+            cancel-in-progress: true
+        runs-on: ubuntu-latest
+        container:
+            image: ghcr.io/brushfam/typechain-polkadot-ci
+            options: --user root
+        steps:
+            - uses: actions/checkout@v3
+            - name: Setup node
+              uses: actions/setup-node@v1
+              with:
+                  node-version: '16.x'
+            - name: Yarn install dependencies
+              run: |
+                  yarn install
+            - name: Run Test Jest
+              run: |
+                  chown -R root .
+                  chmod -R a+rwx .
+                  set +e
+                  substrate-contracts-node --tmp --dev & P1=$!;
+                  set -e
+                  yarn test
+                  kill $P1
+              timeout-minutes: 3

@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "generate": "echo No generate script",
-    "start": "npx @727-Ventures/typechain-polkadot --plugins ./plugins --input ./artifacts --output ./output"
+    "start": "npx @727-ventures/typechain-polkadot --plugins ./plugins --input ./artifacts --output ./output"
   },
   "dependencies": {
     "@727-ventures/typechain-polkadot": "^1.0.0-beta.2",

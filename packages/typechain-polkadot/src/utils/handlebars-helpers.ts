@@ -72,11 +72,14 @@ Handlebars.registerHelper( 'buildReturn', function(fn: Method) {
 
 		return res;
 	}
-	if(fn.methodType == 'tx') {
+	else if(fn.methodType == 'tx') {
 		return `txSignAndSend( this.__apiPromise, this.__nativeContract, this.__keyringPair,`;
 	}
-	if(fn.methodType == 'extrinsic') {
+	else if(fn.methodType == 'extrinsic') {
 		return `buildSubmittableExtrinsic( this.__apiPromise, this.__nativeContract,`;
+	}
+	else {
+		return '';
 	}
 });
 
@@ -92,8 +95,11 @@ Handlebars.registerHelper('buildWrapper', function(fn: Method) {
 	if(fn.methodType == 'query' && fn.returnType?.tsStr == 'ReturnNumber') {
 		return ', (result) => { return new ReturnNumber(result as (number | string)); }';
 	}
-	if(fn.methodType == 'query' && fn.returnType && fn.returnType?.tsStr !== 'null' && fn.returnType?.tsStr !== 'number' && fn.returnType?.tsStr !== 'string' && fn.returnType?.tsStr !== 'boolean') {
+	else if(fn.methodType == 'query' && fn.returnType && fn.returnType?.tsStr !== 'null' && fn.returnType?.tsStr !== 'number' && fn.returnType?.tsStr !== 'string' && fn.returnType?.tsStr !== 'boolean') {
 		return `, (result) => { return handleReturnType(result, getTypeDescription(${fn.returnType?.id}, DATA_TYPE_DESCRIPTIONS)); }`;
+	}
+	else {
+		return '';
 	}
 });
 
@@ -104,5 +110,7 @@ Handlebars.registerHelper('typeToString', function(description: TypeTS) {
 Handlebars.registerHelper('ifTx', function(fn: Method, options: any) {
 	if(fn.methodType == 'tx') {
 		return options.fn(fn);
+	} else {
+		return '';
 	}
 });

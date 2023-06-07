@@ -69,13 +69,22 @@ exports._signAndSend = exports.buildSubmittableExtrinsic = exports.txSignAndSend
 var query_1 = require("./query");
 function txSignAndSend(nativeAPI, nativeContract, keyringPair, title, eventHandler, args, gasLimitAndValue) {
     return __awaiter(this, void 0, void 0, function () {
-        var _gasLimitAndValue, submittableExtrinsic;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
+        var _gasLimitAndValue, estimatedGasLimit, estimatedGasLimitAndValue, submittableExtrinsic;
+        var _a;
+        return __generator(this, function (_b) {
+            switch (_b.label) {
                 case 0: return [4 /*yield*/, (0, query_1._genValidGasLimitAndValue)(nativeAPI, gasLimitAndValue)];
                 case 1:
-                    _gasLimitAndValue = _a.sent();
-                    submittableExtrinsic = buildSubmittableExtrinsic(nativeAPI, nativeContract, title, args, _gasLimitAndValue);
+                    _gasLimitAndValue = _b.sent();
+                    return [4 /*yield*/, (_a = nativeContract.query)[title].apply(_a, __spreadArray([keyringPair.address,
+                            _gasLimitAndValue], args, false))];
+                case 2:
+                    estimatedGasLimit = (_b.sent()).gasRequired;
+                    estimatedGasLimitAndValue = {
+                        gasLimit: estimatedGasLimit,
+                        value: _gasLimitAndValue.value,
+                    };
+                    submittableExtrinsic = buildSubmittableExtrinsic(nativeAPI, nativeContract, title, args, estimatedGasLimitAndValue);
                     return [2 /*return*/, _signAndSend(nativeAPI.registry, submittableExtrinsic, keyringPair, eventHandler)];
             }
         });

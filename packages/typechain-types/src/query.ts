@@ -182,22 +182,18 @@ export async function queryOutput(
 	const resValueStr = output ? output.toString() : null;
 	const resValueJSON = output ? output.toJSON() : null;
 
-	if(result.isErr) error = {
+	if (result.isErr) error = {
 		issue: 'FAIL_AFTER_CALL::IS_ERROR',
 		_resultIsOk: result.isOk,
 		_asError: result.isErr ? result.asErr : undefined,
 	};
 
-	if(result.isOk === false) error = {
+	if (result.isOk === false) error = {
 		issue: 'FAIL_AFTER_CALL::RESULT_NOT_OK',
 		_asError: result.isErr ? result.asErr : undefined,
 	};
 
-	if(output == null) error = {
-		issue: 'OUTPUT_IS_NULL',
-	};
-
-	if(error) throw error;
+	if (error) throw error;
 
 	return {
 		output: output!,

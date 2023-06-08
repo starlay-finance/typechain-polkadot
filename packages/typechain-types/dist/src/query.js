@@ -198,10 +198,6 @@ title, args, gasLimitAndValue) {
                             issue: 'FAIL_AFTER_CALL::RESULT_NOT_OK',
                             _asError: result.isErr ? result.asErr : undefined,
                         };
-                    if (output == null)
-                        error = {
-                            issue: 'OUTPUT_IS_NULL',
-                        };
                     if (error)
                         throw error;
                     return [2 /*return*/, {

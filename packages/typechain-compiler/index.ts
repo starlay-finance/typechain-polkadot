@@ -51,7 +51,7 @@ function main() {
 			demandOption: "Please, specify, what toolchain you want to use (nightly, stable)",
 			description: "Compile typechain code",
 			type: "string",
-			default: "nightly",
+			default: "stable",
 		})
 		.array("files")
 		.describe("files", "Files to compile")

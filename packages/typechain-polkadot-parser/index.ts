@@ -440,7 +440,7 @@ ${event.args.map((arg) => {
 				return new TypeInfo(
 					typeID,
 					`${generatedType.tsArgType} | null`,
-					`${generatedType.tsReturnTypePrefixed} | null`,
+					`${generatedType.tsReturnType} | null`,
 					`${generatedType.tsArgTypePrefixed} | null`,
 					`${generatedType.tsReturnTypePrefixed} | null`,
 					new TypeTS('Option', false, false, false,{

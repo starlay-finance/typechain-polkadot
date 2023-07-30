@@ -34,7 +34,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     function verb(n) { return function (v) { return step([n, v]); }; }
     function step(op) {
         if (f) throw new TypeError("Generator is already executing.");
-        while (g && (g = 0, op[0] && (_ = 0)), _) try {
+        while (_) try {
             if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
             if (y = 0, t) op = [op[0] & 2, t.value];
             switch (op[0]) {
@@ -64,46 +64,26 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
     }
     return to.concat(ar || Array.prototype.slice.call(from));
 };
-Object.defineProperty(exports, "__esModule", { value: true });
+exports.__esModule = true;
 exports._signAndSend = exports.buildSubmittableExtrinsic = exports.txSignAndSend = void 0;
 var query_1 = require("./query");
-var util_1 = require("@polkadot/util");
-function txSignAndSend(nativeAPI, nativeContract, keyringPair, title, eventHandler, args, gasLimitAndValue) {
-    return __awaiter(this, void 0, void 0, function () {
-        var _gasLimitAndValue, _realGasLimit, estimatedGasLimit, estimatedGasLimitAndValue, submittableExtrinsic;
-        var _a;
-        return __generator(this, function (_b) {
-            switch (_b.label) {
-                case 0: return [4 /*yield*/, (0, query_1._genValidGasLimitAndValue)(nativeAPI, gasLimitAndValue)];
-                case 1:
-                    _gasLimitAndValue = _b.sent();
-                    _realGasLimit = gasLimitAndValue || { gasLimit: undefined, value: undefined };
-                    return [4 /*yield*/, (_a = nativeContract.query)[title].apply(_a, __spreadArray([keyringPair.address,
-                            _gasLimitAndValue], args, false))];
-                case 2:
-                    estimatedGasLimit = (_b.sent()).gasRequired;
-                    estimatedGasLimitAndValue = {
-                        gasLimit: _realGasLimit.gasLimit || estimatedGasLimit,
-                        value: _realGasLimit.value || util_1.BN_ZERO,
-                    };
-                    submittableExtrinsic = buildSubmittableExtrinsic(nativeAPI, nativeContract, title, args, estimatedGasLimitAndValue);
-                    return [2 /*return*/, _signAndSend(nativeAPI.registry, submittableExtrinsic, keyringPair, eventHandler)];
-            }
-        });
-    });
+function txSignAndSend(nativeAPI, nativeContract, keyringPair, title, args, gasLimitAndValue) {
+    var submittableExtrinsic = buildSubmittableExtrinsic(nativeContract, title, args, gasLimitAndValue);
+    return _signAndSend(nativeAPI.registry, submittableExtrinsic, keyringPair);
 }
 exports.txSignAndSend = txSignAndSend;
-function buildSubmittableExtrinsic(api, nativeContract, title, args, gasLimitAndValue) {
+function buildSubmittableExtrinsic(nativeContract, title, args, gasLimitAndValue) {
     var _a;
     if (nativeContract.tx[title] == null) {
         var error = {
             issue: 'METHOD_DOESNT_EXIST',
-            texts: ["Method name: '".concat(title, "'")],
+            texts: ["Method name: '".concat(title, "'")]
         };
         throw error;
     }
     var _args = args || [];
-    var submittableExtrinsic = (_a = nativeContract.tx)[title].apply(_a, __spreadArray([gasLimitAndValue], _args, false));
+    var _gasLimitAndValue = (0, query_1._genValidGasLimitAndValue)(gasLimitAndValue);
+    var submittableExtrinsic = (_a = nativeContract.tx)[title].apply(_a, __spreadArray([_gasLimitAndValue], _args, false));
     return submittableExtrinsic;
 }
 exports.buildSubmittableExtrinsic = buildSubmittableExtrinsic;
@@ -112,7 +92,7 @@ exports.buildSubmittableExtrinsic = buildSubmittableExtrinsic;
  * 	- https://polkadot.js.org/docs/api/cookbook/tx#how-do-i-get-the-decoded-enum-for-an-extrinsicfailed-event
  * 	- `@redspot/patract/buildTx`
  */
-function _signAndSend(registry, extrinsic, signer, eventHandler) {
+function _signAndSend(registry, extrinsic, signer) {
     return __awaiter(this, void 0, void 0, function () {
         var signerAddress;
         return __generator(this, function (_a) {
@@ -120,7 +100,7 @@ function _signAndSend(registry, extrinsic, signer, eventHandler) {
             return [2 /*return*/, new Promise(function (resolve, reject) {
                     var actionStatus = {
                         from: signerAddress.toString(),
-                        txHash: extrinsic.hash.toHex(),
+                        txHash: extrinsic.hash.toHex()
                     };
                     extrinsic
                         .signAndSend(signer, function (result) {
@@ -128,7 +108,6 @@ function _signAndSend(registry, extrinsic, signer, eventHandler) {
                             actionStatus.blockHash = result.status.asInBlock.toHex();
                         }
                         if (result.status.isFinalized || result.status.isInBlock) {
-                            actionStatus.events = eventHandler(result.events);
                             result.events
                                 .filter(function (_a) {
                                 var section = _a.event.section;
@@ -155,7 +134,7 @@ function _signAndSend(registry, extrinsic, signer, eventHandler) {
                                         }
                                     }
                                     actionStatus.error = {
-                                        message: message,
+                                        message: message
                                     };
                                     reject(actionStatus);
                                 }
@@ -167,15 +146,14 @@ function _signAndSend(registry, extrinsic, signer, eventHandler) {
                         }
                         else if (result.isError) {
                             actionStatus.error = {
-                                data: result,
+                                data: result
                             };
                             actionStatus.events = undefined;
                             reject(actionStatus);
                         }
-                    })
-                        .catch(function (error) {
+                    })["catch"](function (error) {
                         actionStatus.error = {
-                            message: error.message,
+                            message: error.message
                         };
                         reject(actionStatus);
                     });

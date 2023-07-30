@@ -122,7 +122,12 @@ function main() {
 
 			const cmd = `cargo +${toolchain} contract ${isRelease ? "build --release" : "build"} --manifest-path ${tomlFile} ${config.skipLinting ? '--skip-linting' : ''}`;
 
-			execSync(cmd);
+			try {
+				execSync(cmd);
+			} catch (e) {
+				logger.error(chalk.redBright(`======== Failed to compile ${contractName} ========`));
+				continue;
+			}
 
 			let targetInfo = {
 				path: PathAPI.resolve(PathAPI.dirname(tomlFile), 'target', 'ink'),

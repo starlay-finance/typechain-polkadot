@@ -118,9 +118,17 @@ export class Result<T, E> {
 			return this.ok;
 		}
 
-		if(this.err)throw this.err;
+		if(this.err) throw this.err;
 
 		return this.ok;
+	}
+
+	unwrapErr(): E | undefined {
+		if (this.err) {
+			return this.err;
+		}
+
+		return undefined;
 	}
 }
 

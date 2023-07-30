@@ -67,22 +67,24 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports._signAndSend = exports.buildSubmittableExtrinsic = exports.txSignAndSend = void 0;
 var query_1 = require("./query");
+var util_1 = require("@polkadot/util");
 function txSignAndSend(nativeAPI, nativeContract, keyringPair, title, eventHandler, args, gasLimitAndValue) {
     return __awaiter(this, void 0, void 0, function () {
-        var _gasLimitAndValue, estimatedGasLimit, estimatedGasLimitAndValue, submittableExtrinsic;
+        var _gasLimitAndValue, _realGasLimit, estimatedGasLimit, estimatedGasLimitAndValue, submittableExtrinsic;
         var _a;
         return __generator(this, function (_b) {
             switch (_b.label) {
                 case 0: return [4 /*yield*/, (0, query_1._genValidGasLimitAndValue)(nativeAPI, gasLimitAndValue)];
                 case 1:
                     _gasLimitAndValue = _b.sent();
+                    _realGasLimit = gasLimitAndValue || { gasLimit: undefined, value: undefined };
                     return [4 /*yield*/, (_a = nativeContract.query)[title].apply(_a, __spreadArray([keyringPair.address,
                             _gasLimitAndValue], args, false))];
                 case 2:
                     estimatedGasLimit = (_b.sent()).gasRequired;
                     estimatedGasLimitAndValue = {
-                        gasLimit: estimatedGasLimit,
-                        value: _gasLimitAndValue.value,
+                        gasLimit: _realGasLimit.gasLimit || estimatedGasLimit,
+                        value: _realGasLimit.value || util_1.BN_ZERO,
                     };
                     submittableExtrinsic = buildSubmittableExtrinsic(nativeAPI, nativeContract, title, args, estimatedGasLimitAndValue);
                     return [2 /*return*/, _signAndSend(nativeAPI.registry, submittableExtrinsic, keyringPair, eventHandler)];

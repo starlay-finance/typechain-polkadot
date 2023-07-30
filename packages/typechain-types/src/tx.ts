@@ -69,6 +69,7 @@ export async function txSignAndSend(
 	gasLimitAndValue ? : GasLimitAndValue,
 ) {
 	const _gasLimitAndValue = await _genValidGasLimitAndValue(nativeAPI, gasLimitAndValue);
+	const _realGasLimit = gasLimitAndValue || {gasLimit: undefined, value: undefined};
 
 	// estimate gas limit
 
@@ -78,8 +79,8 @@ export async function txSignAndSend(
 	)).gasRequired;
 
 	const estimatedGasLimitAndValue = {
-		gasLimit: estimatedGasLimit,
-		value: _gasLimitAndValue.value,
+		gasLimit: _realGasLimit.gasLimit || estimatedGasLimit,
+		value: _realGasLimit.value || BN_ZERO,
 	};
 
 	const submittableExtrinsic = buildSubmittableExtrinsic(

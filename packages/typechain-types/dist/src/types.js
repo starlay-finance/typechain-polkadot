@@ -49,6 +49,12 @@ var Result = /** @class */ (function () {
             throw this.err;
         return this.ok;
     };
+    Result.prototype.unwrapErr = function () {
+        if (this.err) {
+            return this.err;
+        }
+        return undefined;
+    };
     return Result;
 }());
 exports.Result = Result;

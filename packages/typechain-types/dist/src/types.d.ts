@@ -58,6 +58,7 @@ export declare class Result<T, E> {
     err?: E;
     unwrap(): T;
     unwrapRecursively(): T;
+    unwrapErr(): E | undefined;
 }
 export declare class ResultBuilder {
     static Ok<T, E>(value: T): Result<T, E>;

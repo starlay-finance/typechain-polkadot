@@ -1,8 +1,8 @@
 /* This file is auto-generated */
 
 import type { ContractPromise } from '@polkadot/api-contract';
-import type { GasLimit, GasLimitAndRequiredValue } from '@727-ventures/typechain-types';
-import { buildSubmittableExtrinsic } from '@727-ventures/typechain-types';
+import type { GasLimit, GasLimitAndRequiredValue } from '@starlay-finance/typechain-types';
+import { buildSubmittableExtrinsic } from '@starlay-finance/typechain-types';
 import type * as ArgumentTypes from '../types-arguments/my_psp34';
 import type BN from 'bn.js';
 import type { ApiPromise } from '@polkadot/api';
@@ -10,11 +10,11 @@ import type { ApiPromise } from '@polkadot/api';
 
 
 export default class Methods {
-	private __nativeContract : ContractPromise;
+	private __nativeContract: ContractPromise;
 	private __apiPromise: ApiPromise;
 
 	constructor(
-		nativeContract : ContractPromise,
+		nativeContract: ContractPromise,
 		apiPromise: ApiPromise,
 	) {
 		this.__nativeContract = nativeContract;
@@ -25,11 +25,11 @@ export default class Methods {
 	 *
 	 * @param { ArgumentTypes.AccountId } owner,
 	*/
-	"balanceOf" (
+	"balanceOf"(
 		owner: ArgumentTypes.AccountId,
 		__options: GasLimit,
-	){
-		return buildSubmittableExtrinsic( this.__apiPromise, this.__nativeContract, "psp34::balanceOf", [owner], __options);
+	) {
+		return buildSubmittableExtrinsic(this.__apiPromise, this.__nativeContract, "psp34::balanceOf", [owner], __options);
 	}
 
 	/**
@@ -39,13 +39,13 @@ export default class Methods {
 	 * @param { ArgumentTypes.AccountId } operator,
 	 * @param { ArgumentTypes.Id | null } id,
 	*/
-	"allowance" (
+	"allowance"(
 		owner: ArgumentTypes.AccountId,
 		operator: ArgumentTypes.AccountId,
 		id: ArgumentTypes.Id | null,
 		__options: GasLimit,
-	){
-		return buildSubmittableExtrinsic( this.__apiPromise, this.__nativeContract, "psp34::allowance", [owner, operator, id], __options);
+	) {
+		return buildSubmittableExtrinsic(this.__apiPromise, this.__nativeContract, "psp34::allowance", [owner, operator, id], __options);
 	}
 
 	/**
@@ -55,23 +55,23 @@ export default class Methods {
 	 * @param { ArgumentTypes.Id } id,
 	 * @param { Array<(number | string | BN)> } data,
 	*/
-	"transfer" (
+	"transfer"(
 		to: ArgumentTypes.AccountId,
 		id: ArgumentTypes.Id,
 		data: Array<(number | string | BN)>,
 		__options: GasLimit,
-	){
-		return buildSubmittableExtrinsic( this.__apiPromise, this.__nativeContract, "psp34::transfer", [to, id, data], __options);
+	) {
+		return buildSubmittableExtrinsic(this.__apiPromise, this.__nativeContract, "psp34::transfer", [to, id, data], __options);
 	}
 
 	/**
 	 * collectionId
 	 *
 	*/
-	"collectionId" (
+	"collectionId"(
 		__options: GasLimit,
-	){
-		return buildSubmittableExtrinsic( this.__apiPromise, this.__nativeContract, "psp34::collectionId", [], __options);
+	) {
+		return buildSubmittableExtrinsic(this.__apiPromise, this.__nativeContract, "psp34::collectionId", [], __options);
 	}
 
 	/**
@@ -81,13 +81,13 @@ export default class Methods {
 	 * @param { ArgumentTypes.Id | null } id,
 	 * @param { boolean } approved,
 	*/
-	"approve" (
+	"approve"(
 		operator: ArgumentTypes.AccountId,
 		id: ArgumentTypes.Id | null,
 		approved: boolean,
 		__options: GasLimit,
-	){
-		return buildSubmittableExtrinsic( this.__apiPromise, this.__nativeContract, "psp34::approve", [operator, id, approved], __options);
+	) {
+		return buildSubmittableExtrinsic(this.__apiPromise, this.__nativeContract, "psp34::approve", [operator, id, approved], __options);
 	}
 
 	/**
@@ -95,21 +95,21 @@ export default class Methods {
 	 *
 	 * @param { ArgumentTypes.Id } id,
 	*/
-	"ownerOf" (
+	"ownerOf"(
 		id: ArgumentTypes.Id,
 		__options: GasLimit,
-	){
-		return buildSubmittableExtrinsic( this.__apiPromise, this.__nativeContract, "psp34::ownerOf", [id], __options);
+	) {
+		return buildSubmittableExtrinsic(this.__apiPromise, this.__nativeContract, "psp34::ownerOf", [id], __options);
 	}
 
 	/**
 	 * totalSupply
 	 *
 	*/
-	"totalSupply" (
+	"totalSupply"(
 		__options: GasLimit,
-	){
-		return buildSubmittableExtrinsic( this.__apiPromise, this.__nativeContract, "psp34::totalSupply", [], __options);
+	) {
+		return buildSubmittableExtrinsic(this.__apiPromise, this.__nativeContract, "psp34::totalSupply", [], __options);
 	}
 
 	/**
@@ -118,12 +118,12 @@ export default class Methods {
 	 * @param { ArgumentTypes.AccountId } account,
 	 * @param { ArgumentTypes.Id } id,
 	*/
-	"mint" (
+	"mint"(
 		account: ArgumentTypes.AccountId,
 		id: ArgumentTypes.Id,
 		__options: GasLimit,
-	){
-		return buildSubmittableExtrinsic( this.__apiPromise, this.__nativeContract, "psp34Mintable::mint", [account, id], __options);
+	) {
+		return buildSubmittableExtrinsic(this.__apiPromise, this.__nativeContract, "psp34Mintable::mint", [account, id], __options);
 	}
 
 }

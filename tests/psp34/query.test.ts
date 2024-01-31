@@ -1,15 +1,15 @@
 import * as PolkadotAPI from "@polkadot/api";
 import Contract from "../generated/contracts/my_psp34";
-import {IdBuilder} from "../generated/types-arguments/my_psp34";
+import { IdBuilder } from "../generated/types-arguments/my_psp34";
 import Constructors from "../generated/constructors/my_psp34";
-import type {KeyringPair} from "@polkadot/keyring/types";
-import {GetAccounts} from "../config";
-import {ResultBuilder} from "@727-ventures/typechain-types";
+import type { KeyringPair } from "@polkadot/keyring/types";
+import { GetAccounts } from "../config";
+import { ResultBuilder } from "@starlay-finance/typechain-types";
 
 describe('MY_PSP34', () => {
 	let api: PolkadotAPI.ApiPromise;
 	let contract: Contract;
-	let UserAlice: KeyringPair, UserBob: KeyringPair, UserCharlie : KeyringPair;
+	let UserAlice: KeyringPair, UserBob: KeyringPair, UserCharlie: KeyringPair;
 
 	beforeAll(async () => {
 		api = await PolkadotAPI.ApiPromise.create();

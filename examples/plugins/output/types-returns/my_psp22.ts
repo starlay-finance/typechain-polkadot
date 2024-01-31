@@ -1,5 +1,5 @@
 import type BN from 'bn.js';
-import type {ReturnNumber} from '@727-ventures/typechain-types';
+import type { ReturnNumber } from '@starlay-finance/typechain-types';
 
 export enum LangError {
 	couldNotReadInput = 'CouldNotReadInput'
@@ -8,12 +8,12 @@ export enum LangError {
 export type AccountId = string | number[]
 
 export interface PSP22Error {
-	custom ? : Array<number>,
-	insufficientBalance ? : null,
-	insufficientAllowance ? : null,
-	zeroRecipientAddress ? : null,
-	zeroSenderAddress ? : null,
-	safeTransferCheckFailed ? : Array<number>
+	custom?: Array<number>,
+	insufficientBalance?: null,
+	insufficientAllowance?: null,
+	zeroRecipientAddress?: null,
+	zeroSenderAddress?: null,
+	safeTransferCheckFailed?: Array<number>
 }
 
 export class PSP22ErrorBuilder {

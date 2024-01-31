@@ -19,16 +19,16 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import {Abi} from "@polkadot/api-contract";
-import {TypeParser} from "@727-ventures/typechain-polkadot-parser";
-import {PolkadotEvent} from "../types";
+import { Abi } from "@polkadot/api-contract";
+import { TypeParser } from "@starlay-finance/typechain-polkadot-parser";
+import { PolkadotEvent } from "../types";
 import Handlebars from "handlebars";
-import {writeFileSync} from "../utils/directories";
-import {readTemplate} from "../utils/handlebars-helpers";
+import { writeFileSync } from "../utils/directories";
+import { readTemplate } from "../utils/handlebars-helpers";
 
 const generateForMetaTemplate = Handlebars.compile(readTemplate("events"));
 
-export const FILE = (fileName: string, events: PolkadotEvent[]) => generateForMetaTemplate({fileName, events});
+export const FILE = (fileName: string, events: PolkadotEvent[]) => generateForMetaTemplate({ fileName, events });
 
 /**
  * generates a mixed-methods file

@@ -19,17 +19,17 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import {Abi} from "@polkadot/api-contract";
-import {TypeParser} from "@727-ventures/typechain-polkadot-parser";
+import { Abi } from "@polkadot/api-contract";
+import { TypeParser } from "@starlay-finance/typechain-polkadot-parser";
 import Handlebars from "handlebars";
-import {TypeInfo} from "@727-ventures/typechain-polkadot-parser/src/types/TypeInfo";
-import {Import} from "../types";
-import {readTemplate} from "../utils/handlebars-helpers";
-import {writeFileSync} from "../utils/directories";
+import { TypeInfo } from "@starlay-finance/typechain-polkadot-parser/src/types/TypeInfo";
+import { Import } from "../types";
+import { readTemplate } from "../utils/handlebars-helpers";
+import { writeFileSync } from "../utils/directories";
 
 const generateForMetaTemplate = Handlebars.compile(readTemplate("types-returns"));
 
-export const FILE = (tsTypes : TypeInfo[], additionalImports: Import[]) => generateForMetaTemplate({tsTypes, additionalImports});
+export const FILE = (tsTypes: TypeInfo[], additionalImports: Import[]) => generateForMetaTemplate({ tsTypes, additionalImports });
 
 /**
  * generates a types-returns file

@@ -33,8 +33,8 @@
  *  @example
  *  # Usage from CLI
  *  ```bash
- *     $ npm i @727-ventures/typechain-polkadot
- *     $ npx @727-ventures/typechain-polkadot --in path/to/abis --out path/to/output/folder
+ *     $ npm i @starlay-finance/typechain-polkadot
+ *     $ npx @starlay-finance/typechain-polkadot --in path/to/abis --out path/to/output/folder
  *  ```
  *
  *  @packageDocumentation
@@ -64,7 +64,7 @@ const _argv = YARGS
 		description: 'Plugins directory',
 		type: 'string',
 	})
-	.help().alias( 'h', 'help')
+	.help().alias('h', 'help')
 	.argv;
 
 async function main() {

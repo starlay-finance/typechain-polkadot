@@ -1,17 +1,17 @@
 import type BN from 'bn.js';
-import type {ReturnNumber} from '@727-ventures/typechain-types';
+import type { ReturnNumber } from '@starlay-finance/typechain-types';
 
 export type AccountId = string | number[]
 
 export type Key = string | number[]
 
 export interface PSP22Error {
-	custom ? : string,
-	insufficientBalance ? : null,
-	insufficientAllowance ? : null,
-	zeroRecipientAddress ? : null,
-	zeroSenderAddress ? : null,
-	safeTransferCheckFailed ? : string
+	custom?: string,
+	insufficientBalance?: null,
+	insufficientAllowance?: null,
+	zeroRecipientAddress?: null,
+	zeroSenderAddress?: null,
+	safeTransferCheckFailed?: string
 }
 
 export class PSP22ErrorBuilder {

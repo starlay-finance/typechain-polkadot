@@ -1,10 +1,11 @@
 export interface Config {
 	projectFiles: string[];
-	skipLinting : boolean;
-	artifactsPath : string;
-	typechainGeneratedPath : string;
-	isWorkspace ?: boolean;
-	workspacePath ?: string;
+	skipLinting: boolean;
+	skipWasmValidation: boolean;
+	artifactsPath: string;
+	typechainGeneratedPath: string;
+	isWorkspace?: boolean;
+	workspacePath?: string;
 }
 
 export function parseConfig(configStr: string): Config {
@@ -17,6 +18,10 @@ export function parseConfig(configStr: string): Config {
 
 	if (config.skipLinting === undefined) {
 		config.skipLinting = false;
+	}
+
+	if (config.skipWasmValidation === undefined) {
+		config.skipWasmValidation = false;
 	}
 
 	if (config.artifactsPath === undefined) {

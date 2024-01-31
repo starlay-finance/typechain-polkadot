@@ -2,27 +2,27 @@
 
 import type { ContractPromise } from '@polkadot/api-contract';
 import type { ApiPromise } from '@polkadot/api';
-import type { GasLimit, GasLimitAndRequiredValue, Result } from '@727-ventures/typechain-types';
-import type { QueryReturnType } from '@727-ventures/typechain-types';
-import { queryJSON, queryOkJSON, handleReturnType } from '@727-ventures/typechain-types';
+import type { GasLimit, GasLimitAndRequiredValue, Result } from '@starlay-finance/typechain-types';
+import type { QueryReturnType } from '@starlay-finance/typechain-types';
+import { queryJSON, queryOkJSON, handleReturnType } from '@starlay-finance/typechain-types';
 import type * as ArgumentTypes from '../types-arguments/my_psp22';
 import type * as ReturnTypes from '../types-returns/my_psp22';
 import type BN from 'bn.js';
 //@ts-ignore
-import {ReturnNumber} from '@727-ventures/typechain-types';
-import {getTypeDescription} from './../shared/utils';
+import { ReturnNumber } from '@starlay-finance/typechain-types';
+import { getTypeDescription } from './../shared/utils';
 import DATA_TYPE_DESCRIPTIONS from '../data/my_psp22.json';
 
 
 export default class Methods {
-	private __nativeContract : ContractPromise;
+	private __nativeContract: ContractPromise;
 	private __apiPromise: ApiPromise;
-	private __callerAddress : string;
+	private __callerAddress: string;
 
 	constructor(
-		nativeContract : ContractPromise,
-		nativeApi : ApiPromise,
-		callerAddress : string,
+		nativeContract: ContractPromise,
+		nativeApi: ApiPromise,
+		callerAddress: string,
 	) {
 		this.__nativeContract = nativeContract;
 		this.__callerAddress = callerAddress;
@@ -37,13 +37,13 @@ export default class Methods {
 	* @param { Array<(number | string | BN)> } data,
 	* @returns { Result<null, ReturnTypes.PSP22Error> }
 	*/
-	"transfer" (
+	"transfer"(
 		to: ArgumentTypes.AccountId,
 		value: (string | number | BN),
 		data: Array<(number | string | BN)>,
-		__options ? : GasLimit,
-	): Promise< QueryReturnType< Result<null, ReturnTypes.PSP22Error> > >{
-		return queryOkJSON( this.__apiPromise, this.__nativeContract, this.__callerAddress, "psp22::transfer", [to, value, data], __options , (result) => { return handleReturnType(result, getTypeDescription(10, DATA_TYPE_DESCRIPTIONS)); });
+		__options?: GasLimit,
+	): Promise<QueryReturnType<Result<null, ReturnTypes.PSP22Error>>> {
+		return queryOkJSON(this.__apiPromise, this.__nativeContract, this.__callerAddress, "psp22::transfer", [to, value, data], __options, (result) => { return handleReturnType(result, getTypeDescription(10, DATA_TYPE_DESCRIPTIONS)); });
 	}
 
 	/**
@@ -53,12 +53,12 @@ export default class Methods {
 	* @param { (string | number | BN) } deltaValue,
 	* @returns { Result<null, ReturnTypes.PSP22Error> }
 	*/
-	"decreaseAllowance" (
+	"decreaseAllowance"(
 		spender: ArgumentTypes.AccountId,
 		deltaValue: (string | number | BN),
-		__options ? : GasLimit,
-	): Promise< QueryReturnType< Result<null, ReturnTypes.PSP22Error> > >{
-		return queryOkJSON( this.__apiPromise, this.__nativeContract, this.__callerAddress, "psp22::decreaseAllowance", [spender, deltaValue], __options , (result) => { return handleReturnType(result, getTypeDescription(10, DATA_TYPE_DESCRIPTIONS)); });
+		__options?: GasLimit,
+	): Promise<QueryReturnType<Result<null, ReturnTypes.PSP22Error>>> {
+		return queryOkJSON(this.__apiPromise, this.__nativeContract, this.__callerAddress, "psp22::decreaseAllowance", [spender, deltaValue], __options, (result) => { return handleReturnType(result, getTypeDescription(10, DATA_TYPE_DESCRIPTIONS)); });
 	}
 
 	/**
@@ -67,11 +67,11 @@ export default class Methods {
 	* @param { ArgumentTypes.AccountId } owner,
 	* @returns { ReturnNumber }
 	*/
-	"balanceOf" (
+	"balanceOf"(
 		owner: ArgumentTypes.AccountId,
-		__options ? : GasLimit,
-	): Promise< QueryReturnType< ReturnNumber > >{
-		return queryJSON< ReturnNumber >( this.__apiPromise, this.__nativeContract, this.__callerAddress, "psp22::balanceOf", [owner], __options , (result) => { return new ReturnNumber(result as (number | string)); });
+		__options?: GasLimit,
+	): Promise<QueryReturnType<ReturnNumber>> {
+		return queryJSON<ReturnNumber>(this.__apiPromise, this.__nativeContract, this.__callerAddress, "psp22::balanceOf", [owner], __options, (result) => { return new ReturnNumber(result as (number | string)); });
 	}
 
 	/**
@@ -81,12 +81,12 @@ export default class Methods {
 	* @param { ArgumentTypes.AccountId } spender,
 	* @returns { ReturnNumber }
 	*/
-	"allowance" (
+	"allowance"(
 		owner: ArgumentTypes.AccountId,
 		spender: ArgumentTypes.AccountId,
-		__options ? : GasLimit,
-	): Promise< QueryReturnType< ReturnNumber > >{
-		return queryJSON< ReturnNumber >( this.__apiPromise, this.__nativeContract, this.__callerAddress, "psp22::allowance", [owner, spender], __options , (result) => { return new ReturnNumber(result as (number | string)); });
+		__options?: GasLimit,
+	): Promise<QueryReturnType<ReturnNumber>> {
+		return queryJSON<ReturnNumber>(this.__apiPromise, this.__nativeContract, this.__callerAddress, "psp22::allowance", [owner, spender], __options, (result) => { return new ReturnNumber(result as (number | string)); });
 	}
 
 	/**
@@ -96,12 +96,12 @@ export default class Methods {
 	* @param { (string | number | BN) } deltaValue,
 	* @returns { Result<null, ReturnTypes.PSP22Error> }
 	*/
-	"increaseAllowance" (
+	"increaseAllowance"(
 		spender: ArgumentTypes.AccountId,
 		deltaValue: (string | number | BN),
-		__options ? : GasLimit,
-	): Promise< QueryReturnType< Result<null, ReturnTypes.PSP22Error> > >{
-		return queryOkJSON( this.__apiPromise, this.__nativeContract, this.__callerAddress, "psp22::increaseAllowance", [spender, deltaValue], __options , (result) => { return handleReturnType(result, getTypeDescription(10, DATA_TYPE_DESCRIPTIONS)); });
+		__options?: GasLimit,
+	): Promise<QueryReturnType<Result<null, ReturnTypes.PSP22Error>>> {
+		return queryOkJSON(this.__apiPromise, this.__nativeContract, this.__callerAddress, "psp22::increaseAllowance", [spender, deltaValue], __options, (result) => { return handleReturnType(result, getTypeDescription(10, DATA_TYPE_DESCRIPTIONS)); });
 	}
 
 	/**
@@ -109,10 +109,10 @@ export default class Methods {
 	*
 	* @returns { ReturnNumber }
 	*/
-	"totalSupply" (
-		__options ? : GasLimit,
-	): Promise< QueryReturnType< ReturnNumber > >{
-		return queryJSON< ReturnNumber >( this.__apiPromise, this.__nativeContract, this.__callerAddress, "psp22::totalSupply", [], __options , (result) => { return new ReturnNumber(result as (number | string)); });
+	"totalSupply"(
+		__options?: GasLimit,
+	): Promise<QueryReturnType<ReturnNumber>> {
+		return queryJSON<ReturnNumber>(this.__apiPromise, this.__nativeContract, this.__callerAddress, "psp22::totalSupply", [], __options, (result) => { return new ReturnNumber(result as (number | string)); });
 	}
 
 	/**
@@ -124,14 +124,14 @@ export default class Methods {
 	* @param { Array<(number | string | BN)> } data,
 	* @returns { Result<null, ReturnTypes.PSP22Error> }
 	*/
-	"transferFrom" (
+	"transferFrom"(
 		from: ArgumentTypes.AccountId,
 		to: ArgumentTypes.AccountId,
 		value: (string | number | BN),
 		data: Array<(number | string | BN)>,
-		__options ? : GasLimit,
-	): Promise< QueryReturnType< Result<null, ReturnTypes.PSP22Error> > >{
-		return queryOkJSON( this.__apiPromise, this.__nativeContract, this.__callerAddress, "psp22::transferFrom", [from, to, value, data], __options , (result) => { return handleReturnType(result, getTypeDescription(10, DATA_TYPE_DESCRIPTIONS)); });
+		__options?: GasLimit,
+	): Promise<QueryReturnType<Result<null, ReturnTypes.PSP22Error>>> {
+		return queryOkJSON(this.__apiPromise, this.__nativeContract, this.__callerAddress, "psp22::transferFrom", [from, to, value, data], __options, (result) => { return handleReturnType(result, getTypeDescription(10, DATA_TYPE_DESCRIPTIONS)); });
 	}
 
 	/**
@@ -141,12 +141,12 @@ export default class Methods {
 	* @param { (string | number | BN) } value,
 	* @returns { Result<null, ReturnTypes.PSP22Error> }
 	*/
-	"approve" (
+	"approve"(
 		spender: ArgumentTypes.AccountId,
 		value: (string | number | BN),
-		__options ? : GasLimit,
-	): Promise< QueryReturnType< Result<null, ReturnTypes.PSP22Error> > >{
-		return queryOkJSON( this.__apiPromise, this.__nativeContract, this.__callerAddress, "psp22::approve", [spender, value], __options , (result) => { return handleReturnType(result, getTypeDescription(10, DATA_TYPE_DESCRIPTIONS)); });
+		__options?: GasLimit,
+	): Promise<QueryReturnType<Result<null, ReturnTypes.PSP22Error>>> {
+		return queryOkJSON(this.__apiPromise, this.__nativeContract, this.__callerAddress, "psp22::approve", [spender, value], __options, (result) => { return handleReturnType(result, getTypeDescription(10, DATA_TYPE_DESCRIPTIONS)); });
 	}
 
 	/**
@@ -156,12 +156,12 @@ export default class Methods {
 	* @param { (string | number | BN) } amount,
 	* @returns { Result<null, ReturnTypes.PSP22Error> }
 	*/
-	"mint" (
+	"mint"(
 		account: ArgumentTypes.AccountId,
 		amount: (string | number | BN),
-		__options ? : GasLimit,
-	): Promise< QueryReturnType< Result<null, ReturnTypes.PSP22Error> > >{
-		return queryOkJSON( this.__apiPromise, this.__nativeContract, this.__callerAddress, "psp22Mintable::mint", [account, amount], __options , (result) => { return handleReturnType(result, getTypeDescription(10, DATA_TYPE_DESCRIPTIONS)); });
+		__options?: GasLimit,
+	): Promise<QueryReturnType<Result<null, ReturnTypes.PSP22Error>>> {
+		return queryOkJSON(this.__apiPromise, this.__nativeContract, this.__callerAddress, "psp22Mintable::mint", [account, amount], __options, (result) => { return handleReturnType(result, getTypeDescription(10, DATA_TYPE_DESCRIPTIONS)); });
 	}
 
 }

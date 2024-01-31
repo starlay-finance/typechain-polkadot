@@ -19,14 +19,14 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import {Abi} from "@polkadot/api-contract";
-import {Method} from "../types";
-import {TypeParser} from "@727-ventures/typechain-polkadot-parser";
+import { Abi } from "@polkadot/api-contract";
+import { Method } from "../types";
+import { TypeParser } from "@starlay-finance/typechain-polkadot-parser";
 import PathAPI from "path";
 import Handlebars from "handlebars";
-import {readTemplate} from "../utils/handlebars-helpers";
-import {writeFileSync} from "../utils/directories";
-import {TypechainPlugin} from "../types/interfaces";
+import { readTemplate } from "../utils/handlebars-helpers";
+import { writeFileSync } from "../utils/directories";
+import { TypechainPlugin } from "../types/interfaces";
 
 const generateForMetaTemplate = Handlebars.compile(readTemplate("constructors"));
 
@@ -38,7 +38,7 @@ const generateForMetaTemplate = Handlebars.compile(readTemplate("constructors"))
  * @param methods - The methods to generate for the file
  * @returns {string} Generated file content
  */
-export const FILE = (fileName : string, methods: Method[]) => generateForMetaTemplate({fileName, methods});
+export const FILE = (fileName: string, methods: Method[]) => generateForMetaTemplate({ fileName, methods });
 
 
 /**
@@ -58,9 +58,9 @@ function generate(abi: Abi, fileName: string, absPathToOutput: string, absPathTo
 	const parser = new TypeParser(abi);
 
 	const __allArgs = abi.constructors.map(m => m.args).flat();
-	const __uniqueArgs : typeof __allArgs = [];
-	for(const __arg of __allArgs)
-		if(!__uniqueArgs.find(__a => __a.type.lookupIndex === __arg.type.lookupIndex))
+	const __uniqueArgs: typeof __allArgs = [];
+	for (const __arg of __allArgs)
+		if (!__uniqueArgs.find(__a => __a.type.lookupIndex === __arg.type.lookupIndex))
 			__uniqueArgs.push(__arg);
 
 
@@ -78,7 +78,7 @@ function generate(abi: Abi, fileName: string, absPathToOutput: string, absPathTo
 
 	_methodsNames = _methodsNames.map((m) => {
 		const _overloadsCount = _methodsNames.filter(__m => __m.cut === m.cut).length;
-		if(_overloadsCount > 1) {
+		if (_overloadsCount > 1) {
 			return {
 				original: m.original,
 				cut: m.original,
@@ -89,7 +89,7 @@ function generate(abi: Abi, fileName: string, absPathToOutput: string, absPathTo
 	});
 
 	const methods: Method[] = [];
-	for(const __message of abi.constructors) {
+	for (const __message of abi.constructors) {
 		const _methodName = _methodsNames.find(__m => __m.original === __message.identifier)!;
 		methods.push({
 			name: _methodName.cut,

@@ -1,11 +1,11 @@
 import Contract from '../generated/contracts/my_psp34_events';
 import Constructors from '../generated/constructors/my_psp34_events';
-import {ApiPromise, Keyring} from "@polkadot/api";
-import type {KeyringPair} from "@polkadot/keyring/types";
-import {GetAccounts} from "../config";
-import {IdBuilder} from "../generated/types-returns/my_psp34_events";
-import {IdBuilder as IdBuilderArgs} from "../generated/types-arguments/my_psp34_events";
-import {ReturnNumber} from "@727-ventures/typechain-types";
+import { ApiPromise, Keyring } from "@polkadot/api";
+import type { KeyringPair } from "@polkadot/keyring/types";
+import { GetAccounts } from "../config";
+import { IdBuilder } from "../generated/types-returns/my_psp34_events";
+import { IdBuilder as IdBuilderArgs } from "../generated/types-arguments/my_psp34_events";
+import { ReturnNumber } from "@starlay-finance/typechain-types";
 
 describe("Events", () => {
 	let api: ApiPromise;
@@ -24,7 +24,7 @@ describe("Events", () => {
 
 		const factory = new Constructors(api, UserAlice);
 
-		const {address} = await factory.new();
+		const { address } = await factory.new();
 
 		contract = new Contract(address, UserAlice, api);
 		contract_bob = new Contract(address, UserBob, api);

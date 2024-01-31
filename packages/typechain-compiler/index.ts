@@ -1,10 +1,10 @@
 import YARGS from "yargs";
 import * as PathAPI from "path";
 import * as FsAPI from "fs";
-import {parseConfig} from "./src/types";
-import {sync as globbySync} from "globby";
-import {execSync} from 'child_process';
-import {__assureDirExists, __writeFileSync, getContractNameFromToml} from "./src/utils";
+import { parseConfig } from "./src/types";
+import { sync as globbySync } from "globby";
+import { execSync } from 'child_process';
+import { __assureDirExists, __writeFileSync, getContractNameFromToml } from "./src/utils";
 import chalk from "chalk";
 import logger from "./src/logger";
 import dotenv from 'dotenv';
@@ -13,7 +13,7 @@ function Typechain(
 	input: string,
 	output: string
 ) {
-	execSync(`npx @727-ventures/typechain-polkadot --in ${input} --out ${output}`);
+	execSync(`npx @starlay-finance/typechain-polkadot --in ${input} --out ${output}`);
 }
 
 function main() {
@@ -63,6 +63,8 @@ function main() {
 		.describe("typechainGeneratedPath", "Typechain generated path")
 		.boolean("isWorkspace")
 		.describe("isWorkspace", "Is workspace")
+		.boolean("skipWasmValidation")
+		.describe("skipWasmValidation", "Skip Wasm Validation")
 		.string("workspacePath")
 		.describe("workspacePath", "Workspace path")
 		.help().alias("h", "help")
@@ -71,7 +73,7 @@ function main() {
 	const argv = _argv as Awaited<typeof _argv>;
 
 	const cwdPath = process.cwd();
-	const absPathToConfig = PathAPI.resolve( cwdPath, `./${argv.config}` );
+	const absPathToConfig = PathAPI.resolve(cwdPath, `./${argv.config}`);
 	const isRelease = argv.release;
 	const isNoCompile = argv.noCompile;
 	const isNoTypechain = argv.noTypechain;
@@ -87,6 +89,10 @@ function main() {
 	if (argv.skipLinting !== undefined) {
 		// @ts-ignore
 		config.skipLinting = argv.skipLinting;
+	}
+	if (argv.skipWasmValidation != undefined) {
+		// @ts-ignore
+		config.skipWasmValidation = argv.skipWasmValidation;
 	}
 	if (argv.artifactsPath !== undefined) {
 		// @ts-ignore
@@ -106,7 +112,7 @@ function main() {
 	}
 
 	if (!isNoCompile) {
-		const files = globbySync(config.projectFiles, {onlyFiles: true});
+		const files = globbySync(config.projectFiles, { onlyFiles: true });
 		const tomlFiles = files.filter((file: string) => file.endsWith("Cargo.toml"));
 
 		logger.log(chalk.magenta('======== Found contracts ========'));
@@ -120,7 +126,7 @@ function main() {
 
 			logger.log(chalk.magenta(`======== Compiling ${contractName} ========`));
 
-			const cmd = `cargo +${toolchain} contract ${isRelease ? "build --release" : "build"} --manifest-path ${tomlFile} ${config.skipLinting ? '--skip-linting' : ''}`;
+			const cmd = `cargo +${toolchain} contract ${isRelease ? "build --release" : "build"} --manifest-path ${tomlFile} ${config.skipLinting ? "--skip-linting" : ""} ${config.skipWasmValidation ? "--skip-wasm-validation" : ""}`;
 
 			try {
 				execSync(cmd);

@@ -31,13 +31,13 @@ import type {
 } from '@polkadot/api/submittable/types';
 import type { KeyringPair } from '@polkadot/keyring/types';
 import type { Registry } from '@polkadot/types-codec/types';
-import type {ApiPromise, SubmittableResult} from "@polkadot/api";
+import type { ApiPromise, SubmittableResult } from "@polkadot/api";
 // @ts-ignore
-import type {EventRecord} from "@polkadot/api/submittable";
-import {TypeTS} from "@727-ventures/typechain-polkadot-parser/src/types/TypeInfo";
-import {convertWeight} from "@polkadot/api-contract/base/util";
-import {Weight, WeightV2} from "@polkadot/types/interfaces";
-import {BN_HUNDRED, BN_ZERO} from "@polkadot/util";
+import type { EventRecord } from "@polkadot/api/submittable";
+import { TypeTS } from "@starlay-finance/typechain-polkadot-parser/src/types/TypeInfo";
+import { convertWeight } from "@polkadot/api-contract/base/util";
+import { Weight, WeightV2 } from "@polkadot/types/interfaces";
+import { BN_HUNDRED, BN_ZERO } from "@polkadot/util";
 
 type SignAndSendSuccessResponse = {
 	from: string;
@@ -59,17 +59,17 @@ export type {
 
 export async function txSignAndSend(
 	nativeAPI: ApiPromise,
-	nativeContract : ContractPromise,
-	keyringPair : KeyringPair,
-	title : string,
-	eventHandler : (event: EventRecord[]) => {
+	nativeContract: ContractPromise,
+	keyringPair: KeyringPair,
+	title: string,
+	eventHandler: (event: EventRecord[]) => {
 		[index: string]: any;
 	},
-	args ? : readonly RequestArgumentType[],
-	gasLimitAndValue ? : GasLimitAndValue,
+	args?: readonly RequestArgumentType[],
+	gasLimitAndValue?: GasLimitAndValue,
 ) {
 	const _gasLimitAndValue = await _genValidGasLimitAndValue(nativeAPI, gasLimitAndValue);
-	const _realGasLimit = gasLimitAndValue || {gasLimit: undefined, value: undefined};
+	const _realGasLimit = gasLimitAndValue || { gasLimit: undefined, value: undefined };
 
 	// estimate gas limit
 
@@ -92,13 +92,13 @@ export async function txSignAndSend(
 
 export function buildSubmittableExtrinsic(
 	api: ApiPromise,
-	nativeContract : ContractPromise,
-	title : string,
-	args ? : readonly RequestArgumentType[],
-	gasLimitAndValue ? : GasLimitAndValue,
+	nativeContract: ContractPromise,
+	title: string,
+	args?: readonly RequestArgumentType[],
+	gasLimitAndValue?: GasLimitAndValue,
 ) {
-	if(nativeContract.tx[title] == null) {
-		const error : MethodDoesntExistError = {
+	if (nativeContract.tx[title] == null) {
+		const error: MethodDoesntExistError = {
 			issue: 'METHOD_DOESNT_EXIST',
 			texts: [`Method name: '${title}'`],
 		};
@@ -124,7 +124,7 @@ export async function _signAndSend(
 	registry: Registry,
 	extrinsic: SubmittableExtrinsic<'promise'>,
 	signer: KeyringPair,
-	eventHandler : (event: EventRecord[]) => {
+	eventHandler: (event: EventRecord[]) => {
 		[index: string]: any;
 	},
 ): Promise<SignAndSendSuccessResponse> {
@@ -169,11 +169,10 @@ export async function _signAndSend(
 													mod.error.toNumber()
 												])
 											);
-											message = `${error.section}.${error.name}${
-												Array.isArray(error.docs)
+											message = `${error.section}.${error.name}${Array.isArray(error.docs)
 													? `(${error.docs.join('')})`
 													: error.docs || ''
-											}`;
+												}`;
 										} catch (error) {
 											// swallow
 										}

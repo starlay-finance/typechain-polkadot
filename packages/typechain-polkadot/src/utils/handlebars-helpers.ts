@@ -23,17 +23,17 @@ import path from "path";
 import fs from "fs";
 import Handlebars from "handlebars";
 import toCamelCase from 'camelcase';
-import {Method} from "../types";
-import {Abi} from "@polkadot/api-contract";
-import {TypeTS} from "@727-ventures/typechain-polkadot-parser/src/types/TypeInfo";
-import {stringCamelCase} from "@polkadot/util";
+import { Method } from "../types";
+import { Abi } from "@polkadot/api-contract";
+import { TypeTS } from "@starlay-finance/typechain-polkadot-parser/src/types/TypeInfo";
+import { stringCamelCase } from "@polkadot/util";
 
 /**
  * Reads handlebars templates from the given template name from {@link src/templates}
  *
  * @param template - Template name
  */
-export function readTemplate (template: string): string {
+export function readTemplate(template: string): string {
 	// Inside the api repo itself, it will be 'auto'
 	const rootDir = __dirname + '/../templates';
 
@@ -55,15 +55,15 @@ Handlebars.registerHelper('toCamelCaseForFunctions', function (fn: string) {
 	return stringCamelCase(fn);
 });
 
-Handlebars.registerHelper( 'buildReturn', function(fn: Method) {
-	if(fn.methodType == 'query') {
+Handlebars.registerHelper('buildReturn', function (fn: Method) {
+	if (fn.methodType == 'query') {
 		let res = '';
 		if (fn.resultQuery) {
 			res += 'queryOkJSON';
 		}
 		else {
 			res += 'queryJSON';
-			if(fn.returnType?.tsStr == 'ReturnNumber') {
+			if (fn.returnType?.tsStr == 'ReturnNumber') {
 				res += '< ReturnNumber >';
 			}
 		}
@@ -72,10 +72,10 @@ Handlebars.registerHelper( 'buildReturn', function(fn: Method) {
 
 		return res;
 	}
-	else if(fn.methodType == 'tx') {
+	else if (fn.methodType == 'tx') {
 		return `txSignAndSend( this.__apiPromise, this.__nativeContract, this.__keyringPair,`;
 	}
-	else if(fn.methodType == 'extrinsic') {
+	else if (fn.methodType == 'extrinsic') {
 		return `buildSubmittableExtrinsic( this.__apiPromise, this.__nativeContract,`;
 	}
 	else {
@@ -83,19 +83,19 @@ Handlebars.registerHelper( 'buildReturn', function(fn: Method) {
 	}
 });
 
-Handlebars.registerHelper( 'buildReturnType', function(fn: Method) {
-	if(fn.returnType) {
+Handlebars.registerHelper('buildReturnType', function (fn: Method) {
+	if (fn.returnType) {
 		return `: Promise< QueryReturnType< ${fn.returnType.tsStr} > >`;
 	}
 
 	return '';
 });
 
-Handlebars.registerHelper('buildWrapper', function(fn: Method) {
-	if(fn.methodType == 'query' && fn.returnType?.tsStr == 'ReturnNumber') {
+Handlebars.registerHelper('buildWrapper', function (fn: Method) {
+	if (fn.methodType == 'query' && fn.returnType?.tsStr == 'ReturnNumber') {
 		return ', (result) => { return new ReturnNumber(result as (number | string)); }';
 	}
-	else if(fn.methodType == 'query' && fn.returnType && fn.returnType?.tsStr !== 'null' && fn.returnType?.tsStr !== 'number' && fn.returnType?.tsStr !== 'string' && fn.returnType?.tsStr !== 'boolean') {
+	else if (fn.methodType == 'query' && fn.returnType && fn.returnType?.tsStr !== 'null' && fn.returnType?.tsStr !== 'number' && fn.returnType?.tsStr !== 'string' && fn.returnType?.tsStr !== 'boolean') {
 		return `, (result) => { return handleReturnType(result, getTypeDescription(${fn.returnType?.id}, DATA_TYPE_DESCRIPTIONS)); }`;
 	}
 	else {
@@ -103,12 +103,12 @@ Handlebars.registerHelper('buildWrapper', function(fn: Method) {
 	}
 });
 
-Handlebars.registerHelper('typeToString', function(description: TypeTS) {
+Handlebars.registerHelper('typeToString', function (description: TypeTS) {
 	return `export const ${description.name}TypeDescription = ${description.toString()};`;
 });
 
-Handlebars.registerHelper('ifTx', function(fn: Method, options: any) {
-	if(fn.methodType == 'tx') {
+Handlebars.registerHelper('ifTx', function (fn: Method, options: any) {
+	if (fn.methodType == 'tx') {
 		return options.fn(fn);
 	} else {
 		return '';

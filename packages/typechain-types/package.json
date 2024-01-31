@@ -1,6 +1,6 @@
 {
 	"name": "@starlay-finance/typechain-types",
-	"version": "1.1.2",
+	"version": "1.0.0",
 	"description": "Types and utility function for TypeChain",
 	"repository": {
 		"type": "git",

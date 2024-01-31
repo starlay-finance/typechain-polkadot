@@ -34,7 +34,6 @@ import type { Registry } from '@polkadot/types-codec/types';
 import type { ApiPromise, SubmittableResult } from "@polkadot/api";
 // @ts-ignore
 import type { EventRecord } from "@polkadot/api/submittable";
-import { TypeTS } from "@starlay-finance/typechain-polkadot-parser/src/types/TypeInfo";
 import { convertWeight } from "@polkadot/api-contract/base/util";
 import { Weight, WeightV2 } from "@polkadot/types/interfaces";
 import { BN_HUNDRED, BN_ZERO } from "@polkadot/util";
@@ -170,8 +169,8 @@ export async function _signAndSend(
 												])
 											);
 											message = `${error.section}.${error.name}${Array.isArray(error.docs)
-													? `(${error.docs.join('')})`
-													: error.docs || ''
+												? `(${error.docs.join('')})`
+												: error.docs || ''
 												}`;
 										} catch (error) {
 											// swallow

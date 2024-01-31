@@ -1,6 +1,6 @@
 {
 	"name": "@starlay-finance/typechain-compiler",
-	"version": "1.1.5",
+	"version": "1.0.0",
 	"description": "Util to test and compile your rust project",
 	"bin": {
 		"typechain-compiler": "bin/index.js"
@@ -30,7 +30,7 @@
 	},
 	"homepage": "https://github.com/starlay-finance/typechain-polkadot#readme",
 	"dependencies": {
-		"@starlay-finance/typechain-polkadot": "^1.1.1",
+		"@starlay-finance/typechain-polkadot": "^1.0.0",
 		"@types/consola": "^2.2.5",
 		"@types/yargs": "^17.0.10",
 		"chalk": "^4.1.0",

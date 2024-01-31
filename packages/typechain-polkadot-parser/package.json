@@ -1,6 +1,6 @@
 {
 	"name": "@starlay-finance/typechain-polkadot-parser",
-	"version": "1.0.2",
+	"version": "1.0.0",
 	"description": "Parser that can generate typescript definitions from ABI of the contract",
 	"scripts": {
 		"test": "ts-node index.ts"

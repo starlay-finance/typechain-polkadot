@@ -1,6 +1,6 @@
 {
 	"name": "@starlay-finance/typechain-polkadot",
-	"version": "1.0.0",
+	"version": "1.0.2",
 	"scripts": {
 		"start": "ts-node index.ts --in artifacts --out out",
 		"lint": "eslint \"{src,tests}/**/*.{js,jsx,ts,tsx}\"",
@@ -21,7 +21,7 @@
 	},
 	"engineStrict": true,
 	"dependencies": {
-		"@starlay-finance/typechain-polkadot-parser": "1.0.0",
+		"@starlay-finance/typechain-polkadot-parser": "^1.0.1",
 		"@polkadot/api": "^10.8.1",
 		"@polkadot/api-contract": "^10.8.1",
 		"@polkadot/keyring": "^12.2.2",
